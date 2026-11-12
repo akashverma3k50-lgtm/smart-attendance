@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Smart Attendance Management System</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="theme.js"></script>
+</head>
+<body data-theme="dark">
+    <!-- Ambient Lighting Effects -->
+    <div class="ambient-glow-1"></div>
+    <div class="ambient-glow-2"></div>
+
+    <header>
+        <a href="index.html" class="brand">
+            <div class="brand-icon">📋</div>
+            <span class="brand-text">Smart Attendance Dashboard</span>
+        </a>
+        <div class="nav-links">
+            <button type="button" class="theme-toggle-btn" aria-label="Toggle Theme">
+                <span class="theme-icon">☀️</span> <span class="theme-label">Light</span>
+            </button>
+            <span id="userBadge" class="user-badge">👤 Loading...</span>
+            <a href="students.html">Manage Students</a>
+            <button onclick="logout()" class="btn btn-danger" style="width: auto; padding: 7px 16px; font-size: 0.85rem; margin: 0;">
+                Logout
+            </button>
+        </div>
+    </header>
+
+    <div class="main-wrapper" style="align-items: flex-start;">
+        <div class="container" style="max-width: 1050px;">
+            <div class="dashboard-header">
+                <div>
+                    <h1 id="welcomeMessage">Welcome!</h1>
+                    <p id="sessionInfo" class="subtitle" style="margin-bottom: 0;">
+                        Verifying active HttpSession...
+                    </p>
+                </div>
+                <div>
+                    <span class="status-badge status-present">
+                        <span class="pulse-dot"></span> Session Active
+                    </span>
+                </div>
+            </div>
+
+            <div class="dashboard-cards">
+                <div class="card">
+                    <h3>👨‍🎓 Student Management</h3>
+                    <p>Add new students, view student roster, and manage records.</p>
+                    <a href="students.html" class="btn" style="padding: 10px 18px; font-size: 0.9rem;">
+                        <span>Manage Students &rarr;</span>
+                    </a>
+                </div>
+
+                <div class="card">
+                    <h3>📅 Mark Attendance</h3>
+                    <p>Record your attendance status for today's session.</p>
+                    <div class="btn-row" style="margin-top: 0;">
+                        <button type="button" class="btn btn-success" style="padding: 8px 14px; font-size: 0.85rem;" onclick="markStatus('PRESENT')">
+                            ✓ Present
+                        </button>
+                        <button type="button" class="btn btn-danger" style="padding: 8px 14px; font-size: 0.85rem;" onclick="markStatus('ABSENT')">
+                            ✗ Absent
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>🖥️ JSP Dashboard</h3>
+                    <p>Access the server-rendered JSP dashboard with active session inspection.</p>
+                    <a href="/dashboard.jsp" class="btn btn-secondary" style="padding: 10px 18px; font-size: 0.9rem;">
+                        <span>Open JSP Dashboard</span>
+                    </a>
+                </div>
+            </div>
+
+            <div id="dashAlert" class="alert-box"></div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            fetch("/api/dashboard", { credentials: "include" })
+                .then(response => {
+                    if (!response.ok) {
+                        window.location.href = "login.html?error=unauthorized";
+                        return null;
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data) {
+                        document.getElementById("welcomeMessage").innerHTML = "Welcome, <span class='gradient-text'>" + (data.fullName || data.username) + "</span>!";
+                        document.getElementById("userBadge").textContent = "👤 " + data.username + " (" + data.role + ")";
+                        document.getElementById("sessionInfo").textContent =
+                            "Session ID: " + data.sessionId + " | Role: " + data.role;
+                    }
+                })
+                .catch(err => {
+                    console.error("Dashboard check error:", err);
+                    window.location.href = "login.html?error=unauthorized";
+                });
+        });
+
+        function markStatus(status) {
+            fetch("/api/attendance", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                credentials: "include",
+                body: JSON.stringify({
+                    studentId: 1,
+                    status: status,
+                    date: new Date().toISOString().split("T")[0]
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                const box = document.getElementById("dashAlert");
+                box.textContent = data.message || "Attendance updated to " + status;
+                box.className = "alert-box " + (status === "PRESENT" ? "success" : "danger");
+                box.style.display = "block";
+                setTimeout(() => box.style.display = "none", 3000);
+            })
+            .catch(err => console.error("Error marking attendance:", err));
+        }
+
+        function logout() {
+            fetch("/api/auth/logout", { method: "POST", credentials: "include" })
+                .finally(() => {
+                    window.location.href = "login.html?logged_out=true";
+                });
+        }
+    </script>
+</body>
+</html>

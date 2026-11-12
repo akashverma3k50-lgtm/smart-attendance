@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Smart Attendance System</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="theme.js"></script>
+</head>
+<body data-theme="dark">
+    <!-- Ambient Lighting Effects -->
+    <div class="ambient-glow-1"></div>
+    <div class="ambient-glow-2"></div>
+
+    <header>
+        <a href="index.html" class="brand">
+            <div class="brand-icon">📋</div>
+            <span class="brand-text">Smart Attendance</span>
+        </a>
+        <nav class="nav-links">
+            <button type="button" class="theme-toggle-btn" aria-label="Toggle Theme">
+                <span class="theme-icon">☀️</span> <span class="theme-label">Light</span>
+            </button>
+            <a href="index.html">Home</a>
+            <a href="login.html">Login</a>
+        </nav>
+    </header>
+
+    <div class="main-wrapper">
+        <div class="form-card">
+            <div style="text-align: center; margin-bottom: 20px;">
+                <div style="display: inline-flex; align-items: center; justify-content: center; width: 54px; height: 54px; border-radius: 16px; background: var(--primary-light); color: var(--primary); font-size: 1.6rem; border: 1px solid var(--primary-glow); margin-bottom: 12px; animation: pulse-glow 3s infinite;">
+                    📝
+                </div>
+                <h2>Create an Account</h2>
+                <p class="subtitle" style="margin-bottom: 0;">Register your credentials in the attendance portal.</p>
+            </div>
+
+            <!-- Dynamic Alert Box for JavaScript & Server Validation Messages -->
+            <div id="alertBox" class="alert-box"></div>
+
+            <!-- Form: Submits via JavaScript (JSON representation) or direct Servlet POST -->
+            <form id="registerForm" action="/registerServlet" method="POST">
+                <div class="form-group">
+                    <label for="fullName">Full Name</label>
+                    <input type="text" id="fullName" name="fullName" placeholder="e.g. Rahul Sharma" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" placeholder="At least 3 characters" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" placeholder="e.g. user@kiit.ac.in">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="At least 6 characters" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Re-enter password" required>
+                </div>
+
+                <button type="submit" id="registerBtn" class="btn">
+                    <span>Complete Registration &rarr;</span>
+                </button>
+            </form>
+
+            <div class="form-footer">
+                Already registered? <a href="login.html">Login here</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Client-Side JavaScript Validation & JSON Handling (Phase 3) -->
+    <script src="script.js"></script>
+</body>
+</html>

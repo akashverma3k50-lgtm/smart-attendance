@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student &amp; Attendance Management - Smart Attendance</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="theme.js"></script>
+</head>
+<body data-theme="dark">
+    <!-- Ambient Lighting Effects -->
+    <div class="ambient-glow-1"></div>
+    <div class="ambient-glow-2"></div>
+
+    <header>
+        <a href="/dashboard.jsp" class="brand">
+            <div class="brand-icon">📋</div>
+            <span class="brand-text">Smart Attendance</span>
+        </a>
+        <nav class="nav-links">
+            <button type="button" class="theme-toggle-btn" aria-label="Toggle Theme">
+                <span class="theme-icon">☀️</span> <span class="theme-label">Light</span>
+            </button>
+            <a href="/dashboard.jsp">Dashboard</a>
+            <a href="students.html" style="color: var(--primary); font-weight: 700;">Students &amp; Attendance</a>
+            <a href="/logoutServlet" class="btn btn-danger" style="width: auto; padding: 7px 16px; font-size: 0.85rem; color: white;">Logout</a>
+        </nav>
+    </header>
+
+    <div class="main-wrapper" style="align-items: flex-start;">
+        <div class="container" style="max-width: 1150px;">
+            <div class="dashboard-header">
+                <div>
+                    <h1>Student &amp; Attendance <span class="gradient-text">Management</span></h1>
+                    <p class="subtitle" style="margin-bottom: 0;">
+                        Register students, mark daily attendance (Present / Absent), and track attendance percentages.
+                    </p>
+                </div>
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <a href="/dashboard.jsp" class="btn btn-secondary" style="width: auto; padding: 8px 18px; font-size: 0.9rem;">
+                        &larr; Back to Dashboard
+                    </a>
+                </div>
+            </div>
+
+            <!-- Visual Metric Cards -->
+            <div class="dashboard-cards" style="margin-bottom: 24px;">
+                <div class="card" style="padding: 20px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <h4 style="margin: 0; color: var(--text-muted); font-size: 0.88rem; text-transform: uppercase;">Total Students</h4>
+                        <span style="font-size: 1.4rem;">👥</span>
+                    </div>
+                    <h2 id="metricTotalStudents" style="font-size: 2rem; color: var(--primary); margin: 8px 0 0 0;">0</h2>
+                    <p style="margin: 2px 0 0 0; font-size: 0.8rem; color: var(--text-muted);">Enrolled in system</p>
+                </div>
+
+                <div class="card" style="padding: 20px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <h4 style="margin: 0; color: var(--text-muted); font-size: 0.88rem; text-transform: uppercase;">Marked Present</h4>
+                        <span style="font-size: 1.4rem;">✅</span>
+                    </div>
+                    <h2 id="metricTotalPresent" style="font-size: 2rem; color: var(--success); margin: 8px 0 0 0;">0</h2>
+                    <p style="margin: 2px 0 0 0; font-size: 0.8rem; color: var(--text-muted);">Today's attendance</p>
+                </div>
+
+                <div class="card" style="padding: 20px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <h4 style="margin: 0; color: var(--text-muted); font-size: 0.88rem; text-transform: uppercase;">Marked Absent</h4>
+                        <span style="font-size: 1.4rem;">❌</span>
+                    </div>
+                    <h2 id="metricTotalAbsent" style="font-size: 2rem; color: var(--danger); margin: 8px 0 0 0;">0</h2>
+                    <p style="margin: 2px 0 0 0; font-size: 0.8rem; color: var(--text-muted);">Today's absentees</p>
+                </div>
+
+                <div class="card" style="padding: 20px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <h4 style="margin: 0; color: var(--text-muted); font-size: 0.88rem; text-transform: uppercase;">Average Attendance</h4>
+                        <span style="font-size: 1.4rem;">📈</span>
+                    </div>
+                    <h2 id="metricAvgAttendance" style="font-size: 2rem; color: var(--accent); margin: 8px 0 0 0;">0%</h2>
+                    <p style="margin: 2px 0 0 0; font-size: 0.8rem; color: var(--text-muted);">Class overall performance</p>
+                </div>
+            </div>
+
+            <!-- Alert Box for Student & Attendance Actions -->
+            <div id="studentAlert" class="alert-box"></div>
+
+            <!-- Add Student Form Card -->
+            <div class="card" style="margin-bottom: 28px; background: var(--bg-card-subtle);">
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+                    <span style="font-size: 1.3rem;">➕</span>
+                    <h3 style="margin: 0;">Add New Student</h3>
+                </div>
+                <form id="studentForm" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; align-items: end; margin-top: 14px;">
+                    <div>
+                        <label for="rollNumber">Roll Number (Unique)</label>
+                        <input type="text" id="rollNumber" placeholder="e.g. 26MCAA65" required>
+                    </div>
+                    <div>
+                        <label for="studentName">Student Name</label>
+                        <input type="text" id="studentName" placeholder="e.g. Rahul Sharma" required>
+                    </div>
+                    <div>
+                        <label for="department">Department</label>
+                        <input type="text" id="department" placeholder="e.g. MCA / CSE" required>
+                    </div>
+                    <div>
+                        <label for="semester">Semester</label>
+                        <input type="text" id="semester" placeholder="e.g. 4" required>
+                    </div>
+                    <div>
+                        <button type="submit" id="addStudentBtn" class="btn" style="height: 48px;">
+                            <span>Add Student</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Attendance Marking Control Bar -->
+            <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 14px;">
+                <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+                    <h3 style="margin: 0;">📋 Student Attendance Roster</h3>
+                    <div style="display: flex; align-items: center; gap: 8px; background: var(--bg-card-subtle); padding: 6px 14px; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
+                        <label for="attendanceDate" style="margin: 0; font-size: 0.85rem; color: var(--text-muted);">Session Date:</label>
+                        <input type="date" id="attendanceDate" style="padding: 4px 8px; font-size: 0.88rem; width: auto; border: none; background: transparent; color: var(--text-main);">
+                    </div>
+                </div>
+
+                <!-- Instant Search Filter -->
+                <div style="min-width: 240px;">
+                    <input type="text" id="searchStudentInput" placeholder="🔍 Search name, roll, or dept..." style="padding: 8px 14px; font-size: 0.9rem;">
+                </div>
+            </div>
+
+            <!-- Student Roster Table with Graphics & Progress Bars -->
+            <div style="overflow-x: auto; border-radius: var(--radius);">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Roll Number</th>
+                            <th>Student Name</th>
+                            <th>Department</th>
+                            <th>Semester</th>
+                            <th>Today's Status</th>
+                            <th>Overall Attendance %</th>
+                            <th>Mark Attendance</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="studentTableBody">
+                        <tr>
+                            <td colspan="8" style="text-align: center; color: var(--text-muted); padding: 24px;">
+                                Loading student records...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Complete Attendance History Log Section -->
+            <div style="margin-top: 40px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+                    <h3 style="margin: 0;">📜 Detailed Attendance History Log</h3>
+                    <button type="button" class="btn btn-secondary" style="width: auto; padding: 6px 14px; font-size: 0.85rem;" onclick="loadAttendanceHistory()">
+                        🔄 Refresh Log
+                    </button>
+                </div>
+                <div style="overflow-x: auto; border-radius: var(--radius);">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Roll Number</th>
+                                <th>Student Name</th>
+                                <th>Department</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="attendanceHistoryBody">
+                            <tr>
+                                <td colspan="5" style="text-align: center; color: var(--text-muted); padding: 24px;">
+                                    Loading history logs...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Student & Attendance Management Script -->
+    <script src="student.js"></script>
+</body>
+</html>

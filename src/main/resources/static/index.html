@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Smart Attendance Management System</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="theme.js"></script>
+</head>
+<body data-theme="dark">
+    <!-- Ambient Lighting Effects -->
+    <div class="ambient-glow-1"></div>
+    <div class="ambient-glow-2"></div>
+
+    <header>
+        <a href="index.html" class="brand">
+            <div class="brand-icon">📋</div>
+            <span class="brand-text">Smart Attendance</span>
+        </a>
+        <nav class="nav-links">
+            <button type="button" class="theme-toggle-btn" aria-label="Toggle Theme">
+                <span class="theme-icon">☀️</span> <span class="theme-label">Light</span>
+            </button>
+            <a href="login.html">Login</a>
+            <a href="register.html">Register</a>
+        </nav>
+    </header>
+
+    <div class="main-wrapper">
+        <div class="hero-grid">
+            <!-- Left Column: Copy & CTAs -->
+            <div style="text-align: left;">
+                <div style="display: inline-flex; align-items: center; gap: 8px; background: var(--primary-light); color: var(--primary); padding: 6px 14px; border-radius: 20px; font-size: 0.88rem; font-weight: 600; margin-bottom: 18px; border: 1px solid var(--primary-glow);">
+                    <span class="pulse-dot"></span> Next-Gen Smart Attendance
+                </div>
+                <h1>Modern &amp; Secure <br><span class="gradient-text">Student Attendance System</span></h1>
+                <p class="subtitle" style="font-size: 1.05rem; line-height: 1.7; max-width: 520px;">
+                    Automate academic attendance tracking, monitor real-time class metrics, and protect records with PBKDF2 cryptography and role-based session control.
+                </p>
+
+                <div class="hero-buttons" style="display: flex; gap: 14px; margin-top: 28px;">
+                    <a href="login.html" class="btn" style="width: auto; padding: 13px 28px;">
+                        <span>🚀 Launch Portal</span>
+                    </a>
+                    <a href="register.html" class="btn btn-secondary" style="width: auto; padding: 13px 26px;">
+                        <span>Create Account</span>
+                    </a>
+                </div>
+
+                <div style="display: flex; gap: 24px; margin-top: 36px; border-top: 1px solid var(--border-color); padding-top: 24px;">
+                    <div>
+                        <h3 style="margin: 0; font-size: 1.4rem; color: var(--primary);">100%</h3>
+                        <p style="margin: 0; font-size: 0.85rem; color: var(--text-muted);">Real-Time Sync</p>
+                    </div>
+                    <div>
+                        <h3 style="margin: 0; font-size: 1.4rem; color: var(--accent);">PBKDF2</h3>
+                        <p style="margin: 0; font-size: 0.85rem; color: var(--text-muted);">Hashed Security</p>
+                    </div>
+                    <div>
+                        <h3 style="margin: 0; font-size: 1.4rem; color: var(--success);">Zero</h3>
+                        <p style="margin: 0; font-size: 0.85rem; color: var(--text-muted);">Duplicate Rolls</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Interactive Animated Graphic Card -->
+            <div class="hero-visual-card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <span style="font-size: 1.5rem;">📊</span>
+                        <div>
+                            <h4 style="margin: 0; font-size: 1rem; color: var(--text-main);">Live Session Radar</h4>
+                            <p style="margin: 0; font-size: 0.8rem; color: var(--text-muted);">Daily Attendance Overview</p>
+                        </div>
+                    </div>
+                    <span class="status-badge status-present">● Live</span>
+                </div>
+
+                <!-- Graphic Badge 1 -->
+                <div class="hero-stat-badge" style="width: 100%;">
+                    <div style="width: 40px; height: 40px; border-radius: 10px; background: rgba(16, 185, 129, 0.15); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: var(--success);">
+                        ✓
+                    </div>
+                    <div style="flex: 1;">
+                        <div style="display: flex; justify-content: space-between;">
+                            <strong style="font-size: 0.9rem;">Present Rate</strong>
+                            <span style="font-size: 0.88rem; color: var(--success); font-weight: 700;">87.5%</span>
+                        </div>
+                        <div class="attendance-progress-bar" style="margin-top: 6px;">
+                            <div class="attendance-progress-fill fill-good" style="width: 87.5%;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Graphic Badge 2 -->
+                <div class="hero-stat-badge" style="width: 100%;">
+                    <div style="width: 40px; height: 40px; border-radius: 10px; background: rgba(99, 102, 241, 0.15); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: var(--primary);">
+                        👥
+                    </div>
+                    <div style="flex: 1;">
+                        <div style="display: flex; justify-content: space-between;">
+                            <strong style="font-size: 0.9rem;">Active Students</strong>
+                            <span style="font-size: 0.88rem; color: var(--primary); font-weight: 700;">Enrolled &amp; Verified</span>
+                        </div>
+                        <p style="margin: 2px 0 0 0; font-size: 0.8rem; color: var(--text-muted);">Automated duplicate protection</p>
+                    </div>
+                </div>
+
+                <!-- Graphic Badge 3 -->
+                <div class="hero-stat-badge" style="width: 100%;">
+                    <div style="width: 40px; height: 40px; border-radius: 10px; background: rgba(34, 211, 238, 0.15); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: var(--accent);">
+                        🛡️
+                    </div>
+                    <div style="flex: 1;">
+                        <div style="display: flex; justify-content: space-between;">
+                            <strong style="font-size: 0.9rem;">Enterprise Security</strong>
+                            <span style="font-size: 0.88rem; color: var(--accent); font-weight: 700;">Active</span>
+                        </div>
+                        <p style="margin: 2px 0 0 0; font-size: 0.8rem; color: var(--text-muted);">HttpSession, XSS Guard &amp; PBKDF2</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
